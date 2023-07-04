@@ -6,6 +6,8 @@ services:
     commands:
       init:
         - ln -snf "${TUGBOAT_ROOT}/revproxy/" "${DOCROOT}"
+      build:
+        - $TUGBOAT_ROOT/.tugboat/scripts/nginx/build.sh
   server:
     image: tugboatqa/debian
     checkout: true
