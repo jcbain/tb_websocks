@@ -3,11 +3,12 @@ services:
     image: tugboatqa/nginx
     default: true
     expose: 80
+    depends: server
     commands:
       init:
         - ln -snf "${TUGBOAT_ROOT}/revproxy/" "${DOCROOT}"
       build:
-        - $TUGBOAT_ROOT/.tugboat/scripts/nginx/build.sh
+        - bash $TUGBOAT_ROOT/.tugboat/scripts/nginx/build.sh
   server:
     image: tugboatqa/debian
     checkout: true
