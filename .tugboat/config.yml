@@ -8,6 +8,6 @@ services:
         - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
         - apt install -y nodejs
       update:
-        - $TUGBOAT_ROOT/.tugboat/scripts/server/update.sh
+        - bash $TUGBOAT_ROOT/.tugboat/scripts/server/update.sh
       build:
-        - $TUGBOAT_ROOT/.tugboat/scripts/server/build.sh
+        - bash $TUGBOAT_ROOT/.tugboat/scripts/server/build.sh
