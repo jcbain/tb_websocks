@@ -24,6 +24,19 @@ export const start = async function (opts: FastifyPluginOptions) {
     );
   });
 
+  server.register(async function (fastify) {
+    fastify.get(
+      "/ws-error",
+      { websocket: true },
+      (connection /* SocketStream */, req /* FastifyRequest */) => {
+        connection.socket.on("message", () => {
+          // message.toString() === 'hi from client'
+          throw new Error("BAD BAD BAD");
+        });
+      }
+    );
+  });
+
   // await server.register(routes, { prefix: '/' });
 
   return server;
