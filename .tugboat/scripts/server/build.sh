@@ -2,4 +2,4 @@
 
 cd $TUGBOAT_ROOT/server
 npm run build
-npm run start &
+exec npm run start
