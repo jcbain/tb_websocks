@@ -5,9 +5,10 @@ services:
     expose: 80
     commands:
       init:
-        - ln -snf "${TUGBOAT_ROOT}/docroot/revproxy" "${DOCROOT}"
+        - ln -snf "${TUGBOAT_ROOT}/revproxy/" "${DOCROOT}"
   server:
     image: tugboatqa/debian
+    checkout: true
     commands:
       init:
         - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
