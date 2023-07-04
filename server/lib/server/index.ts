@@ -29,6 +29,7 @@ export const start = async function (opts: FastifyPluginOptions) {
       "/ws-error",
       { websocket: true },
       (connection /* SocketStream */, req /* FastifyRequest */) => {
+        throw new Error("REALLY BAD");
         connection.socket.on("message", () => {
           // message.toString() === 'hi from client'
           throw new Error("BAD BAD BAD");
