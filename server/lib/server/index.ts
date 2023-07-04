@@ -16,9 +16,10 @@ export const start = async function (opts: FastifyPluginOptions) {
       "/ws",
       { websocket: true },
       (connection /* SocketStream */, req /* FastifyRequest */) => {
-        connection.socket.on("message", () => {
-          // message.toString() === 'hi from client'
-          connection.socket.send("hi from server");
+        connection.socket.send("Welcome to the server");
+        connection.socket.on("message", (message: Buffer) => {
+          const msg = message.toString();
+          connection.socket.send(`🦜 squak! ${msg}`);
         });
       }
     );
@@ -29,19 +30,13 @@ export const start = async function (opts: FastifyPluginOptions) {
       "/ws-error",
       { websocket: true },
       (connection /* SocketStream */, req /* FastifyRequest */) => {
-        throw new Error("REALLY BAD");
         connection.socket.on("message", () => {
-          // message.toString() === 'hi from client'
-          throw new Error("BAD BAD BAD");
+          connection._destroy(new Error("BAD THINGS"), (err) =>
+            console.log(err)
+          );
         });
       }
     );
-  });
-
-  // await server.register(routes, { prefix: '/' });
-
-  server.setErrorHandler((err) => {
-    throw err;
   });
 
   return server;
