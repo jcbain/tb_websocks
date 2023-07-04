@@ -1,3 +1,4 @@
+<!-- Borrowed largely from https://www.htmlgoodies.com/html5/getting-started-with-websockets/ for demo purposes -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,16 +16,15 @@
 
       html {
         font-family: Helvetica, Arial, sans-serif;
-        font-size: 100%;
-        background: #333;
+        background: #f8d700;
       }
 
       #page-wrapper {
-        width: 650px;
-        background: #fff;
-        padding: 1em;
-        margin: 1em auto;
-        border-top: 5px solid #69c773;
+        width: 850px;
+        background: #fffff7;
+        padding: 20px;
+        margin: 40px auto;
+        border-top: 5px solid #b59d05;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
       }
 
@@ -140,18 +140,20 @@
         // get the references of the page elements.
         var form = document.getElementById("form-msg");
         var txtMsg = document.getElementById("msg");
-        var listMsgs = document.getElementById("msgs");
         var socketStatus = document.getElementById("status");
+        var listMsgs = document.getElementById("messages");
+
         var btnClose = document.getElementById("close");
 
         var socket = new WebSocket("ws://localhost:8080/server/ws");
         socket.onopen = function (event) {
-          socketStatus.innerHTML = "Connected to: " + event.currentTarget.URL;
+          socketStatus.innerHTML = "Connected to Socket";
           socketStatus.className = "open";
         };
 
         socket.onerror = function (error) {
           console.log("WebSocket error: " + error);
+          console.dir(error);
         };
 
         form.onsubmit = function (e) {
@@ -164,7 +166,8 @@
           socket.send(msg);
 
           // Adding the msg in a list of sent messages.
-          litsMsgs.innerHTML +=
+
+          listMsgs.innerHTML +=
             '<li class="sent"><span>Sent:</span>' + msg + "</li>";
 
           // Cleaning up the field after sending.
@@ -176,8 +179,9 @@
         socket.onmessage = function (event) {
           var msg = event.data;
           console.log(msg);
-          //   listMsgs.innerHTML +=
-          //     '<li class="received"><span>Received:</span>' + msg + "</li>";
+
+          listMsgs.innerHTML +=
+            '<li class="received"><span>Received:</span>' + msg + "</li>";
         };
 
         socket.onclose = function (event) {

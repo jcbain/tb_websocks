@@ -1,0 +1,14 @@
+services:
+  server:
+    image: tugboatqa/debian
+    expose: 4000
+    default: true
+    commands:
+      init:
+        - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+        - apt install -y nodejs
+      update:
+        - npm install
+      build:
+        - npm run build
+        - npm run start
