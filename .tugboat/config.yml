@@ -17,3 +17,5 @@ services:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/update.sh
       build:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/build.sh
+      start:
+        - npm run start --prefix ${TUGBOAT_ROOT}/server &
