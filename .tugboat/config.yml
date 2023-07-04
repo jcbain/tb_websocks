@@ -4,6 +4,7 @@ services:
     default: true
     expose: 80
     depends: server
+    subpath: true
     commands:
       init:
         - ln -snf "${TUGBOAT_ROOT}/revproxy/" "${DOCROOT}"
