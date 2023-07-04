@@ -1,8 +1,13 @@
 services:
+  nginx:
+    image: tugboatqa/nginx
+    default: true
+    expose: 80
+    commands:
+      init:
+        - ln -snf "${TUGBOAT_ROOT}/docroot/revproxy" "${DOCROOT}"
   server:
     image: tugboatqa/debian
-    expose: 4000
-    default: true
     commands:
       init:
         - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
