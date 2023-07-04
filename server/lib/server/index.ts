@@ -40,5 +40,9 @@ export const start = async function (opts: FastifyPluginOptions) {
 
   // await server.register(routes, { prefix: '/' });
 
+  server.setErrorHandler((err) => {
+    throw err;
+  });
+
   return server;
 };
