@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WebSockets with HTML5</title>
+    <title>WebSockets</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
@@ -146,15 +146,26 @@
         const btnClose = document.getElementById("close");
 
         const host = `${location.host}${location.pathname}`;
-        const socket = new WebSocket(`ws://${host}/socket`);
+        const socketProtocol = location.protocol === "https:" ? "wss" : "ws";
+        let socket = new WebSocket(`${socketProtocol}://${host}/socket`);
         socket.onopen = function (event) {
           socketStatus.innerHTML = "Connected to Socket";
           socketStatus.className = "open";
+          btnClose.firstChild.data = "Close connection";
         };
 
         socket.onerror = function (error) {
           console.log("WebSocket error: " + error);
           console.dir(error);
+        };
+
+        btnClose.onclick = function (ev) {
+          const readyState = socket.readyState;
+          if (readyState !== 1) {
+            socket = new WebSocket(`${socketProtocol}://${host}/socket`);
+            return;
+          }
+          socket.close();
         };
 
         form.onsubmit = function (e) {
@@ -188,6 +199,7 @@
         socket.onclose = function (event) {
           socketStatus.innerHTML = "Disconnected from the WebSocket.";
           socketStatus.className = "closed";
+          btnClose.firstChild.data = "Connect";
         };
       };
     </script>
