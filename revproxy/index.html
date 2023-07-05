@@ -138,14 +138,15 @@
     <script>
       window.onload = function () {
         // get the references of the page elements.
-        var form = document.getElementById("form-msg");
-        var txtMsg = document.getElementById("msg");
-        var socketStatus = document.getElementById("status");
-        var listMsgs = document.getElementById("messages");
+        const form = document.getElementById("form-msg");
+        const txtMsg = document.getElementById("msg");
+        const socketStatus = document.getElementById("status");
+        const listMsgs = document.getElementById("messages");
 
-        var btnClose = document.getElementById("close");
+        const btnClose = document.getElementById("close");
 
-        var socket = new WebSocket("ws://localhost/socket");
+        const host = `${location.host}${location.pathname}`;
+        const socket = new WebSocket(`ws://${host}/socket`);
         socket.onopen = function (event) {
           socketStatus.innerHTML = "Connected to Socket";
           socketStatus.className = "open";
@@ -160,7 +161,7 @@
           e.preventDefault();
 
           // Recovering the message of the textarea.
-          var msg = txtMsg.value;
+          const msg = txtMsg.value;
 
           // Sending the msg via WebSocket.
           socket.send(msg);
@@ -177,7 +178,7 @@
         };
 
         socket.onmessage = function (event) {
-          var msg = event.data;
+          const msg = event.data;
           console.log(msg);
 
           listMsgs.innerHTML +=
