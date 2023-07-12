@@ -6,7 +6,7 @@ services:
     commands:
       init:
         - curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-        - apt install -y nodejs
+        - apt install -y nodejs npm
       update:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/update.sh
       build:
