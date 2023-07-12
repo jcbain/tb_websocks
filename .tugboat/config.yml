@@ -5,8 +5,8 @@ services:
     expose: 4000
     commands:
       init:
-        - curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-        - apt install -y nodejs npm
+        - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+        - apt install -y nodejs
       update:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/update.sh
       build:
