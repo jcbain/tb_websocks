@@ -12,6 +12,7 @@ export const start = async function (opts: FastifyPluginOptions) {
   });
 
   server.get('/throw', async (req, reply) => {
+    req.connection._destroy(new Error("bad shit"),() => {})
     throw new Error("bad things abound")
   })
 
