@@ -11,6 +11,10 @@ export const start = async function (opts: FastifyPluginOptions) {
     return "pong";
   });
 
+  server.get('/throw', async (req, reply) => {
+    throw new Error("bad things abound")
+  })
+
   server.register(async function (fastify) {
     fastify.get(
       "/ws",
@@ -38,6 +42,11 @@ export const start = async function (opts: FastifyPluginOptions) {
       }
     );
   });
+
+  server.setErrorHandler((err, req, reply) => {
+    server.server.emit('error', err)
+    reply.send(err)
+  })
 
   return server;
 };
