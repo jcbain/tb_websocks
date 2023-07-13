@@ -12,4 +12,4 @@ services:
       build:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/build.sh
       start:
-        - npm run dev --prefix ${TUGBOAT_ROOT}/server &
+        - npm run start --prefix ${TUGBOAT_ROOT}/server --max-http-header-size=2048 &
