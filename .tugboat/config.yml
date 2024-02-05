@@ -1,17 +1,8 @@
 services:
-  nginx:
-    image: tugboatqa/nginx
-    default: true
-    expose: 80
-    depends: server
-    commands:
-      init:
-        - ln -snf "${TUGBOAT_ROOT}/revproxy/" "${DOCROOT}"
-      build:
-        - bash $TUGBOAT_ROOT/.tugboat/scripts/nginx/build.sh
   server:
     image: tugboatqa/debian
-    checkout: true
+    default: true
+    expose: 4000
     commands:
       init:
         - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -21,4 +12,4 @@ services:
       build:
         - bash $TUGBOAT_ROOT/.tugboat/scripts/server/build.sh
       start:
-        - npm run start --prefix ${TUGBOAT_ROOT}/server &
+        - npm run dev --prefix ${TUGBOAT_ROOT}/server &
