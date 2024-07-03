@@ -2,6 +2,7 @@ import fastify, { FastifyPluginOptions } from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
 
 // import routes from './routes';
+// just a comment
 
 export const start = async function (opts: FastifyPluginOptions) {
   const server = await fastify(opts);
