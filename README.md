@@ -15,3 +15,5 @@ Once built, you should be able to open up a Tugboat `nginx` terminal and proxy w
 wscat -c ws://${TUGBOAT_DEFAULT_SERVICE_URL_HOST}/server/ws
 
 ```
+
+This is such a neat library
