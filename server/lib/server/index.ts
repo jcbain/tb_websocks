@@ -1,11 +1,31 @@
 import fastify, { FastifyPluginOptions } from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
+import { Readable } from "stream";
+
+const createReadStream = () => {
+  const data = ["some", "data", "to", "read"];
+  return new Readable({
+    async read() {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (data.length === 0) this.push(null);
+      else {
+        this.push(data.shift());
+      }
+    },
+  });
+};
 
 // import routes from './routes';
 
 export const start = async function (opts: FastifyPluginOptions) {
   const server = await fastify(opts);
   server.register(fastifyWebsocket);
+
+  server.get("/stream", (req, reply) => {
+    const stream = createReadStream();
+    reply.header("Content-Type", "application/octet-stream");
+    return reply.send(stream);
+  });
 
   server.get("/long", async (req, reply) => {
     await new Promise((resolve) => setTimeout(resolve, 100000));
