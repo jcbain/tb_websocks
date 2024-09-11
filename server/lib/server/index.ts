@@ -23,7 +23,6 @@ export const start = async function (opts: FastifyPluginOptions) {
 
   server.get("/stream", (req, reply) => {
     const stream = createReadStream();
-    reply.header("Content-Type", "application/octet-stream");
     return reply.send(stream);
   });
 
