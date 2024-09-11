@@ -7,6 +7,11 @@ export const start = async function (opts: FastifyPluginOptions) {
   const server = await fastify(opts);
   server.register(fastifyWebsocket);
 
+  server.get("/long", async (req, reply) => {
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+    return "wowee";
+  });
+
   server.get("/ping", async (req, reply) => {
     return "pong";
   });
