@@ -8,7 +8,7 @@ export const start = async function (opts: FastifyPluginOptions) {
   server.register(fastifyWebsocket);
 
   server.get("/long", async (req, reply) => {
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    await new Promise((resolve) => setTimeout(resolve, 100000));
     return "wowee";
   });
 
