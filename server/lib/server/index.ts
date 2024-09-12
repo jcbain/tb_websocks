@@ -22,7 +22,7 @@ export const start = async function (opts: FastifyPluginOptions) {
     readFile("./big.file", (err, data) => {
       if (err) throw err;
 
-      reply.send(data);
+      reply.type("text/plain").send(data);
     });
   });
 
