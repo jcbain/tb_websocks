@@ -1,19 +1,16 @@
 import fastify, { FastifyPluginOptions } from "fastify";
 import fastifyWebsocket from "@fastify/websocket";
-import { Readable } from "stream";
+import { createWriteStream, readFile } from "fs";
 
-const createReadStream = () => {
-  const data = ["some", "data", "to", "read"];
-  return new Readable({
-    async read() {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (data.length === 0) this.push(null);
-      else {
-        this.push(data.shift());
-      }
-    },
-  });
-};
+const file = createWriteStream("./big.file");
+
+for (let i = 0; i <= 1e6; i++) {
+  file.write(
+    "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"
+  );
+}
+
+file.end();
 
 // import routes from './routes';
 
@@ -22,8 +19,11 @@ export const start = async function (opts: FastifyPluginOptions) {
   server.register(fastifyWebsocket);
 
   server.get("/stream", (req, reply) => {
-    const stream = createReadStream();
-    return reply.send(stream);
+    readFile("./big.file", (err, data) => {
+      if (err) throw err;
+
+      reply.send(data);
+    });
   });
 
   server.get("/long", async (req, reply) => {
